@@ -1,5 +1,5 @@
 import * as mongoose from "mongoose";
-import Menu from "./articles.interface";
+import Article from "./articles.interface";
 
 const articleSchema = new mongoose.Schema({
     name: String,
@@ -8,8 +8,8 @@ const articleSchema = new mongoose.Schema({
     price: Number,
 });
 
-const articleModel = mongoose.model<Menu & mongoose.Document>(
-    "Menu",
+const articleModel = mongoose.model<Article & mongoose.Document>(
+    "Article",
     articleSchema
 );
 

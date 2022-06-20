@@ -33,14 +33,19 @@ class ArticlesController {
 
     private createArticle(req: express.Request, res: express.Response) {
         const articleData: Articles = req.body;
+
+        if (!articleData.description || !articleData.category || !articleData.price) {
+            res.status(400).send("Missing article data");
+            return;
+        }
         const _id = req.body._id;
 
         articleModel
             .findOne({ _id: _id })
             .then((user) => {
                 if (user) {
-                    console.log(`Menu with this _id : ${_id} already exists`);
-                    res.status(400).send(`Menu with this _id : ${_id} already exists`);
+                    console.log(`article with this _id : ${_id} already exists`);
+                    res.status(400).send(`article with this _id : ${_id} already exists`);
                 } else {
                     console.log(articleData);
                     const createdArticle = new articleModel(articleData);
@@ -57,8 +62,8 @@ class ArticlesController {
         articleModel
             .findOneAndUpdate({ _id: _id}, articleData)
             .then((article) => {
-                console.log(`Updated menu restaurant: ${article._id}`);
-                res.status(200).send(`Updated menu restaurant: ${article._id}`);
+                console.log(`Updated article restaurant: ${article._id}`);
+                res.status(200).send(`Updated article restaurant: ${article._id}`);
             }).catch((err) => {
                 console.log(`Update failed ${err}`);
                 res.status(400).send(`Update failed ${err}`);
@@ -70,8 +75,8 @@ class ArticlesController {
         articleModel
             .findOneAndDelete({ _id: _id})
             .then((user) => {
-                console.log(`Deleted menu restaurant: ${user._id}`);
-                res.status(200).send(`Deleted menu restaurant: ${user._id}`);
+                console.log(`Deleted article restaurant: ${user._id}`);
+                res.status(200).send(`Deleted article restaurant: ${user._id}`);
             }).catch((err) => {
                 console.log(err);
                 res.status(400).send(err);
