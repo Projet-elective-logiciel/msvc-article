@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+	  "sourceMap": true,
+	  "target": "es2017",
+	  "outDir": "./dist",
+	  "baseUrl": "./src",
+	  "moduleResolution": "node"
+	},
+	"include": [
+	  "src/**/*.ts", "src/menus/articles.interface.ts", "src/menus/articles.model.ts",
+	],
+	"exclude": [
+	  "node_modules"
+	]
+  }
