@@ -60,7 +60,7 @@ class ArticlesController {
         const _id = req.body._id;
 
         articleModel
-            .findOneAndUpdate({ _id: _id}, articleData)
+            .findOneAndUpdate({ _id: _id}, {$set:req.body}, { new: true })
             .then((article) => {
                 console.log(`Updated article restaurant: ${article._id}`);
                 res.status(200).send(`Updated article restaurant: ${article._id}`);
