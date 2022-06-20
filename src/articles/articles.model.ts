@@ -4,7 +4,7 @@ import Menu from "./articles.interface";
 const articleSchema = new mongoose.Schema({
     name: String,
     description: String,
-    articles: Array,
+    category: String,
     price: Number,
 });
 

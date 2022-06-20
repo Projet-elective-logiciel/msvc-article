@@ -1,9 +1,9 @@
 //TODO Redefinir le schema pour qu'il soit compatible avec le model
 
 interface Menu {
-    name: string,
+    _id: string,
     description: string,
-    articles: [],
+    category: string,
     price:number
 }
 

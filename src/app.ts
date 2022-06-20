@@ -26,7 +26,7 @@ class App {
 
     public listen() {
         this.app.listen(this.port, () => {
-            console.log(`Menu API listening on the port ${this.port}`);
+            console.log(`Article API listening on the port ${this.port}`);
         });
     }
 }
