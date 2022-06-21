@@ -11,24 +11,27 @@ class ArticlesController {
     }
 
     public intializeRoutes() {
-        this.router.get(this.path, this.getArticle);
+        this.router.get(this.path, this.getArticles);
+        this.router.get(`${this.path}/:_id`, this.getArticle);
         this.router.post(this.path, this.createArticle);
-        this.router.put(this.path, this.updateArticle);
-        this.router.delete(this.path, this.deleteArticle);
+        this.router.put(`${this.path}/:_id`, this.updateArticle);
+        this.router.delete(`${this.path}/:_id`, this.deleteArticle);
     }
 
+    private getArticles(req: express.Request, res: express.Response) {
+       
+        articleModel.find().then((articles) => {
+            res.status(200).json(articles);
+        });
+       
+    }
     private getArticle(req: express.Request, res: express.Response) {
-        const _id = req.body._id;
-        if (!_id) {
-            articleModel.find().then((articles) => {
-                res.status(200).json(articles);
-            });
-        }
-        else {
-            articleModel.find({_id: _id }).then((articles) => {
-                res.status(200).json(articles);
-            });
-        }
+        const _id = req.params._id;
+        
+        articleModel.find({_id: _id }).then((articles) => {
+            res.status(200).json(articles);
+        });
+    
     }
 
     private createArticle(req: express.Request, res: express.Response) {
@@ -38,26 +41,17 @@ class ArticlesController {
             res.status(400).send("Missing article data");
             return;
         }
-        const _id = req.body._id;
-
-        articleModel
-            .findOne({ _id: _id })
-            .then((user) => {
-                if (user) {
-                    console.log(`article with this _id : ${_id} already exists`);
-                    res.status(400).send(`article with this _id : ${_id} already exists`);
-                } else {
-                    console.log(articleData);
-                    const createdArticle = new articleModel(articleData);
-                    createdArticle.save().then((savedArticle) => {
-                        res.send(savedArticle);
-                    });
-        }})
+        console.log(articleData);
+        const createdArticle = new articleModel(articleData);
+        createdArticle.save().then((savedArticle) => {
+            res.send(savedArticle);
+        });
+       
     }
 
     private updateArticle(req: express.Request, res: express.Response) {
         const articleData: Articles = req.body;
-        const _id = req.body._id;
+        const _id = req.params._id;
 
         articleModel
             .findOneAndUpdate({ _id: _id}, {$set:req.body}, { new: true })
@@ -71,12 +65,12 @@ class ArticlesController {
     }
 
     private deleteArticle(req: express.Request, res: express.Response) {
-        const _id = req.body._id;
+        const _id = req.params._id;
         articleModel
             .findOneAndDelete({ _id: _id})
-            .then((user) => {
-                console.log(`Deleted article restaurant: ${user._id}`);
-                res.status(200).send(`Deleted article restaurant: ${user._id}`);
+            .then((article) => {
+                console.log(`Deleted article restaurant: ${article._id}`);
+                res.status(200).send(`Deleted article restaurant: ${article._id}`);
             }).catch((err) => {
                 console.log(err);
                 res.status(400).send(err);
