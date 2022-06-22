@@ -6,6 +6,7 @@ const articleSchema = new mongoose.Schema({
     description: String,
     category: String,
     price: Number,
+    image: String
 });
 
 const articleModel = mongoose.model<Article & mongoose.Document>(

@@ -2,7 +2,8 @@ interface Article {
     name: string,
     description: string,
     category: string,
-    price:number
+    price:number,
+    image:string
 }
 
 export default Article;
