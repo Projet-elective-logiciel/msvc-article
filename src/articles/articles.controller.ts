@@ -22,6 +22,8 @@ class ArticlesController {
        
         articleModel.find().then((articles) => {
             res.status(200).json(articles);
+        }).catch((err) => {
+            res.status(500).send(err);
         });
        
     }
@@ -30,6 +32,8 @@ class ArticlesController {
         
         articleModel.find({_id: _id }).then((articles) => {
             res.status(200).json(articles);
+        }).catch((err) => {
+            res.status(500).send(err);
         });
     
     }
@@ -45,6 +49,8 @@ class ArticlesController {
         const createdArticle = new articleModel(articleData);
         createdArticle.save().then((savedArticle) => {
             res.send(savedArticle);
+        }).catch((err) => {
+            res.status(500).send(err);
         });
        
     }
