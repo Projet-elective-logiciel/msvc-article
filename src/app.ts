@@ -1,5 +1,6 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
+import * as cors from "cors";
 import ArticlesController from "articles/articles.controller";
 
 class App {
@@ -18,6 +19,7 @@ class App {
         this.app.use(express.json({limit: '25mb'}));
         this.app.use(express.urlencoded({limit: '25mb'}));
         this.app.use(bodyParser.json());
+		this.app.use(cors());
     }
 
     private initializeControllers(controllers) {
